@@ -23,7 +23,7 @@ public sealed class Level : LevelBasic
 	public Queue<Response> ChunkActionsQueue = new Queue<Response>();
 	public ChunkIO ChunkIO;
 	public Dictionary<long, Entity> EntitiesById = new Dictionary<long, Entity>();
-	public IGenerator Generator;
+	public Generator Generator;
 
 	public VaryingVector2 Gravity = new VaryingVector2(0, -16);
 	public FileHandle LevelSave = FileSystem.GetLocal("world/leveldat.bin");

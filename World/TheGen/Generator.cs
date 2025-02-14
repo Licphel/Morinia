@@ -1,6 +1,6 @@
 ﻿namespace Morinia.World.TheGen;
 
-public interface IGenerator
+public interface Generator
 {
 
 	void Provide(int coord);

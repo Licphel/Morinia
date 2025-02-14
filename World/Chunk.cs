@@ -22,7 +22,7 @@ public sealed class Chunk : ChunkBasic
 
 	public const int Overland = 24;
 	public const int SeaLevel = 102;
-	public const int StoneTransverse = 52;
+	public const int RockTransverse = 52;
 	public const int SurfaceLevel = SeaLevel + Overland;
 	public const int SpaceLevel = 164;
 

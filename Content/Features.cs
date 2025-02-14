@@ -16,10 +16,11 @@ public class Features
 
 	public static Feature Vine = Registry.Register("vine", new FeatureVine());
 
-	public static Feature CoalOreCluster = Registry.Register("coal_ore_cluster", new FeatureOre(Blocks.CoalOre.Instantiate(), 3, 7, new Vector2(0, Chunk.SeaLevel)));
-	public static Feature CopperOreCluster = Registry.Register("copper_ore_cluster", new FeatureOre(Blocks.CopperOre.Instantiate(), 2, 4, new Vector2(0, Chunk.SeaLevel)));
-	public static Feature IronOreCluster = Registry.Register("iron_ore_cluster", new FeatureOre(Blocks.IronOre.Instantiate(), 2, 6, new Vector2(0, Chunk.SeaLevel)));
+	public static Feature LimestoneCoalOreCluster = Registry.Register("limestone_coal_ore", new FeatureOre(Blocks.LimestoneCoalOre.Instantiate(), 4, 5, Blocks.Limestone));
+	public static Feature BasaltIronOreCluster = Registry.Register("basalt_iron_ore", new FeatureOre(Blocks.BasaltIronOre.Instantiate(), 3, 5, Blocks.Basalt));
+	public static Feature GraniteIronOreCluster = Registry.Register("granite_iron_ore", new FeatureOre(Blocks.GraniteIronOre.Instantiate(), 3, 5, Blocks.Granite));
+	public static Feature DioriteIronOreCluster = Registry.Register("diorite_iron_ore", new FeatureOre(Blocks.DioriteIronOre.Instantiate(), 3, 5, Blocks.Diorite));
 
-	public static Feature WaterLake = Registry.Register("water_lake", new FeatureLake(Liquids.Water, 4, 4, new Vector2(0, Chunk.Height)));
+	public static Feature WaterLake = Registry.Register("water_lake", new FeatureLake(Liquids.Water, 4, 2, new Vector2(0, Chunk.Height)));
 
 }

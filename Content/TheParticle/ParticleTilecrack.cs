@@ -46,6 +46,7 @@ public class ParticleBlockcrack : Particle
 			Removal = true;
 		}
 
+		Box.Resize(1 / 16f, 1 / 16f);
 		Velocity.x = 2.5f * FloatMath.CosDeg(degree);
 		MaxAliveTicks = Seed.Global.NextInt(30, 120);
 	}

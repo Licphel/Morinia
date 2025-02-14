@@ -10,12 +10,14 @@ public class FeatureOre : Feature
 
 	readonly BlockState state;
 	readonly float spread;
+	readonly HashSet<Block> Replacables;
 
-	public FeatureOre(BlockState state, float spread, int clusters, Vector2 yrange)
+	public FeatureOre(BlockState state, float spread, int clusters, params Block[] rep)
 	{
 		IsSurfacePlaced = false;
 		TryTimesPerChunk = clusters;
-		Range = yrange;
+		Replacables = new HashSet<Block>(rep);
+		Range = new Vector2(0, Chunk.SeaLevel);
 
 		this.state = state;
 		this.spread = spread;
@@ -23,7 +25,7 @@ public class FeatureOre : Feature
 
 	public override bool IsPlacable(Level level, int x, int y, Seed seed)
 	{
-		return level.GetBlock(x, y).Is(Tags.BlockStone);
+		return Replacables.Contains(level.GetBlock(x, y).Block);
 	}
 
 	public override void Place(Level level, int x, int y, Seed seed)
@@ -37,7 +39,7 @@ public class FeatureOre : Feature
 				float d = FloatMath.Sqrt(i * i + j * j);
 				float c = 1;
 				if(d > spread / 2f) c = (spread - d) * 0.1f + 0.5f;
-				if(seed.NextFloat() < c && level.GetBlock(x1, y1).Is(Tags.BlockStone))
+				if(seed.NextFloat() < c && Replacables.Contains(level.GetBlock(x1, y1).Block))
 				{
 					level.SetBlock(state, x1, y1);
 				}

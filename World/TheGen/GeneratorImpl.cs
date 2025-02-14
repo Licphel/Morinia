@@ -6,7 +6,7 @@ using Morinia.World.TheLiquid;
 
 namespace Morinia.World.TheGen;
 
-public class GeneratorImpl : IGenerator
+public class GeneratorImpl : Generator
 {
 
 	readonly float[] bdchancearr = { 1, 0.9f, 0.75f, 0.25f };
@@ -149,8 +149,8 @@ public class GeneratorImpl : IGenerator
 			for(int y = Chunk.MaxY; y >= 0; y--)
 			{
 				Biome biome = getLocationBiome(x, y, coord, (int) surface);
-				int yclo = (int) (y + (surface - Chunk.SeaLevel) * 0.25f + soildep * 0.1f);
-				BlockState[] stoneType = Geolayer.GetProperType(stoneuniq.Generate(x / 256f, y / 256f, 1), yclo);
+				int yclo = (int) (y + (surface - Chunk.SeaLevel) * 0.5f + soildep * 0.5f);
+				BlockState[] stoneType = RockSerie.GetProperType(stoneuniq.Generate(x / 256f, y / 256f, 1), yclo);
 
 				if(y <= surface)
 				{

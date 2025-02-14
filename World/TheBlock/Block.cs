@@ -10,7 +10,7 @@ using Morinia.World.TheRecipe;
 
 namespace Morinia.World.TheBlock;
 
-public class Block : Tag
+public partial class Block : Tag
 {
 
 	//INJECT
@@ -26,6 +26,12 @@ public class Block : Tag
 		return StatePaletteCache[meta] = Instantiate(meta);
 	}
 	// End
+
+	public Block DeriveItem()
+	{
+		Items.Registry.Register(Uid, new ItemBlockPlacer(this));
+		return this;
+	}
 
 	public override bool Contains<T>(T o)
 	{

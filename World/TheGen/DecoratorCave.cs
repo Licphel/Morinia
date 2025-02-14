@@ -43,8 +43,8 @@ public class DecoratorCave : Decorator
 		float n2 = noise2.Generate(x / 16f, y / 16f, 1);
 		float n3 = noise3.Generate(x / 24f, y / 16f, 1);
 
-		if(y > Chunk.StoneTransverse)
-			n2 -= (y - Chunk.StoneTransverse) / (Chunk.SeaLevel - Chunk.StoneTransverse);
+		if(y > Chunk.RockTransverse)
+			n2 -= (y - Chunk.RockTransverse) / (Chunk.SeaLevel - Chunk.RockTransverse);
 
 		if((n1 < 0.35f || n1 > 0.8f || n3 > 0.5f && n3 < 0.6f) && n2 > 0.2f)
 			chunk.SetBlock(BlockState.Empty, x, y);

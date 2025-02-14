@@ -2,7 +2,7 @@
 
 namespace Morinia.Content.TheBlock;
 
-public class BlockStone : Block
+public class BlockRock : Block
 {
 
 	public override float GetHardness(BlockState state)
