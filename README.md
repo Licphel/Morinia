@@ -1,5 +1,5 @@
 # Morinia
-![](https://img.shields.io/badge/.net->=8.0-informational?style=flat-square&logo=<LOGO_NAME>&logoColor=white&color=green)
+![](https://img.shields.io/badge/.net->=9.0-informational?style=flat-square&logo=<LOGO_NAME>&logoColor=white&color=green)
 ![](https://img.shields.io/badge/license-MIT-informational?style=flat-square&logo=<LOGO_NAME>&logoColor=white&color=2bbc8a)  
 
 The sandbox game, Morinia.
