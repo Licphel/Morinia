@@ -12,7 +12,6 @@ public class FeatureVine : Feature
 	{
 		IsSurfacePlaced = false;
 		TryTimesPerChunk = 16;
-		Range = new Vector2(0, Chunk.SeaLevel + 20);
 	}
 
 	public override bool IsPlacable(Level level, int x, int y, Seed seed)

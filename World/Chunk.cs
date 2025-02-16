@@ -22,7 +22,7 @@ public sealed class Chunk : ChunkBasic
 
 	public const int Overland = 24;
 	public const int SeaLevel = 102;
-	public const int RockTransverse = 52;
+	public const int RockTransverse = 48;
 	public const int SurfaceLevel = SeaLevel + Overland;
 	public const int SpaceLevel = 164;
 
@@ -84,7 +84,11 @@ public sealed class Chunk : ChunkBasic
 		}
 
 		BlockPos pos = new BlockPos(x, y, z);
-		BlockState i0 = BlockMap.Set(x & (Width - 1), y, z, state);
+		BlockState i0 = BlockMap.Set(x, y, z, state);
+
+		if(state.GetShape() == BlockShape.Solid)
+			LiquidMap.Set(x, y, new LiquidStack(Liquid.Empty, 0));
+
 		BlockEntity entity = state.CreateEntityBehavior(Level, pos);
 		SetBlockEntity(entity, pos);
 		Dirty = true;
@@ -111,7 +115,7 @@ public sealed class Chunk : ChunkBasic
 		{
 			return BlockState.Empty;
 		}
-		return BlockMap.Get(x & Width - 1, y, z);
+		return BlockMap.Get(x, y, z);
 	}
 
 	public override BlockEntity GetBlockEntity(IPos pos)

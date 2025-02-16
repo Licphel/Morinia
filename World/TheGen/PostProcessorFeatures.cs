@@ -11,22 +11,30 @@ public class PostProcessorFeatures : PostProcessor
 
 		foreach(Feature f in Content.Features.Registry.List())
 		{
-			int times = f.TryTimesPerChunk;
+			float times = f.TryTimesPerChunk;
 			Vector2 r = f.Range;
 
-			for(int i = 0; i < times; i++)
+			while(times > 0)
 			{
-				int x = seed.NextInt(chunk.Coord * 16, (chunk.Coord + 1) * 16 - 1);
-				int y = f.IsSurfacePlaced
+				if(times >= 1 || seed.NextFloat() < times)
+					DoPlace(f, r);
+				times -= 1;
+			}
+		}
+
+		void DoPlace(Feature f, Vector2 r)
+		{
+			int x = seed.NextInt(chunk.Coord * 16, (chunk.Coord + 1) * 16 - 1);
+			int y = f.IsSurfacePlaced
 				? chunk.Surface[x & 15]
 				: f.RangedGuassian
-				? seed.NextGaussianInt((int) r.x, (int) r.y)
-				: seed.NextInt((int) r.x, (int) r.y);
+					? seed.NextGaussianInt((int) r.x, (int) r.y)
+					: seed.NextInt((int) r.x, (int) r.y);
 
-				if(!f.IsPlacable(level, x, y, seed.Copy())) continue;
+			if(!f.IsPlacable(level, x, y, seed.Copy())) 
+				return;
 
-				f.Place(level, x, y, seed);
-			}
+			f.Place(level, x, y, seed);
 		}
 	}
 

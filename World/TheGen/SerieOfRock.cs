@@ -3,14 +3,14 @@ using Morinia.World.TheBlock;
 
 namespace Morinia.World.TheGen;
 
-public class RockSerie
+public class SerieOfRock
 {
 
-	public static List<KeyValuePair<NativeStoneType, RockSerie>> Layers = new();
+	public static List<KeyValuePair<NativeStoneType, SerieOfRock>> Layers = new();
 
-	public static BlockState[] GetProperType(float a, int y)
+	public static BlockState[] GetProperType(float a, int dist)
 	{
-		if(y > Chunk.RockTransverse)
+		if(dist < Chunk.RockTransverse)
 			return GetProperStone(NativeStoneType.Sedimentary, NativeStoneType.Metamorphic, NativeStoneType.Effusive, NativeStoneType.Intruded, a);
 		return GetProperStone(NativeStoneType.Intruded, NativeStoneType.Effusive, NativeStoneType.Metamorphic, NativeStoneType.Sedimentary, a);
 	}
@@ -24,11 +24,7 @@ public class RockSerie
 		{
 			if(notgen == kv.Key)
 				continue;
-			float d1 = FloatMath.Pow(Math.Abs(a - kv.Value.Uniqueness) + 1, 2);
-			if(kv.Key == type1)
-				d1 *= 0.5f;
-			else if(kv.Key == type2)
-				d1 *= 0.75f;
+			float d1 = Math.Abs(a - kv.Value.Uniqueness);
 
 			if(delta > d1)
 			{
@@ -40,12 +36,14 @@ public class RockSerie
 		return proper;
 	}
 
-	public float Uniqueness;
+	public float Uniqueness => FloatMath.SafeDiv(uniq_id, uniq_id_counter - 1);
+	private int uniq_id;
+	private static int uniq_id_counter;
 	public BlockState[] States;
 
-	public RockSerie(float uniqueness, BlockState[] states)
+	public SerieOfRock(BlockState[] states)
 	{
-		Uniqueness = uniqueness;
+		uniq_id = uniq_id_counter++;
 		States = states;
 	}
 

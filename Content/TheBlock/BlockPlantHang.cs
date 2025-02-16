@@ -31,7 +31,7 @@ public class BlockPlantHang : Block
 	{
 		BlockState state1 = level.GetBlock(Direction.Up.Step(pos));
 
-		if(!state1.Is(Tags.BlockSoil) && !state1.Is(this))
+		if(!state1.Is(Tags.BlockCarvable) && !state1.Is(this))
 		{
 			level.BreakBlock(pos);
 		}

@@ -98,7 +98,7 @@ public class EntityPlayer : Creature
 
 		for(int i = sx - loadArea - 1; i < sx + loadArea + 1; i++)
 		{
-			level.Generator.Provide(i);
+			level.Generator.ProvideAsync(i);
 
 			Chunk chunk = level.GetChunk(i);
 

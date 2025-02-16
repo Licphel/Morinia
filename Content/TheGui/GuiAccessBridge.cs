@@ -39,6 +39,16 @@ public class GuiAccessBridge : ElementGui
 		base.Reflush();
 	}
 
+	public override List<Lore> CollectTooltips()
+	{
+		List<Lore> lst = base.CollectTooltips();
+		
+		if(Bridge.ChosenSlot != null)
+			Bridge.ChosenSlot.Stack.GetTooltips(lst);
+		
+		return lst;
+	}
+
 	public void DrawSlots(SpriteBatch batch)
 	{
 		Slot chosenSlot = Bridge.ChosenSlot;
@@ -61,9 +71,6 @@ public class GuiAccessBridge : ElementGui
 			ItemRendering.GetTessellator(slot.Stack)
 			.Draw(batch, i + slot.x + ofx, j + slot.y + ofx, 16, 16, slot.Stack);
 		}
-
-		ItemRendering.GetTessellator(Bridge.Pickup)
-		.Draw(batch, TempCursor.x - 8, TempCursor.y - 8, 16, 16, Bridge.Pickup);
 	}
 
 	public override void Draw(SpriteBatch batch)
@@ -76,10 +83,12 @@ public class GuiAccessBridge : ElementGui
 		batch.NormalizeColor();
 
 		batch.Draw(Background, i, j, w, h, 0, 0, w, h);
-
-		base.Draw(batch);
-
 		DrawSlots(batch);
+		
+		base.Draw(batch);
+		
+		ItemRendering.GetTessellator(Bridge.Pickup)
+			.Draw(batch, TempCursor.x - 8, TempCursor.y - 8, 16, 16, Bridge.Pickup);
 	}
 
 	public override void Update(VaryingVector2 cursor)

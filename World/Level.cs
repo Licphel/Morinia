@@ -239,7 +239,7 @@ public sealed class Level : LevelBasic
 			foreach(IBinaryCompound compound in list)
 			{
 				int coord = compound.Get<int>("coord");
-				Chunk mask = Generator.MakeEmptyChunk(coord);
+				Chunk mask = Generator.ProvideEmpty(coord);
 				mask.Read(compound.GetCompoundSafely("data"));
 				ChunkMaskMap[coord] = mask;
 			}

@@ -12,11 +12,10 @@ public class FeatureLake : Feature
 	readonly Liquid liquid;
 	readonly float spread;
 
-	public FeatureLake(Liquid liquid, float spread, int clusters, Vector2 yrange)
+	public FeatureLake(Liquid liquid, float spread, float clusters)
 	{
 		IsSurfacePlaced = false;
 		TryTimesPerChunk = clusters;
-		Range = yrange;
 
 		this.liquid = liquid;
 		this.spread = spread;
@@ -38,7 +37,7 @@ public class FeatureLake : Feature
 				float d = FloatMath.Sqrt(i * i + j * j);
 				if((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y) >= spread * spread)
 					continue;
-				if(level.GetBlock(x1, y1).Is(Tags.BlockStone))
+				if(level.GetBlock(x1, y1).Is(Tags.BlockCarvable))
 				{
 					level.SetBlock(BlockState.Empty, x1, y1);
 					level.GetChunk(Posing.ToCoord(x)).LiquidMap

@@ -48,6 +48,7 @@ public class OverlayMain : ElementGui
 		float by = 2 * s;
 
 		EntityPlayer player = Game.GameLogic.Player;
+		Level level = player.Level;
 
 		if(player.Pos.y < 3)
 		{
@@ -63,6 +64,19 @@ public class OverlayMain : ElementGui
 			ItemStack stack = player.Inv.Get(i);
 			ItemRendering.GetTessellator(stack).Draw(batch, bx + lblank * s + (lptri + 1) * s + (st + 1) * i * s, by + (dptri + 1) * s, 16 * s, 16 * s, stack);
 		}
+		
+		batch.Color4(0, 0, 0, 0.5f);
+		Block block = level.GetBlock(Game.GameLogic.HoverPos).Block;
+		if(block != Block.Empty)
+		{
+			string name = I18N.GetText($"{block.Uid.Space}:blocks.{block.Uid.Key}");
+			GlyphBounds gb = batch.Font.GetBounds(name);
+			float frw = gb.Width + 16;
+			float frh = gb.Height + 12;
+			batch.Fill((Size.x - frw) / 2, Size.y - frh - 12, frw, frh);
+			batch.NormalizeColor();
+			batch.Draw(name, (Size.x - frw) / 2 + 8, Size.y - frh - 6);
+		}
 
 		//
 		//
@@ -72,20 +86,19 @@ public class OverlayMain : ElementGui
 		if(!details) return;
 
 		EntityPlayer p = player;
-		Level l = p.Level;
 
 		float hy = 4;
 		const float dy = 18;
 
 		batch.Draw($"location: [x = {p.Pos.x}, y = {p.Pos.y}]", 6, hy);
 		hy += dy;
-		batch.Draw($"time: [c/t = {l.Ticks}, d/t = {l.TicksPerDay}]", 6, hy);
+		batch.Draw($"time: [c/t = {level.Ticks}, d/t = {level.TicksPerDay}]", 6, hy);
 		hy += dy;
-		batch.Draw($"level entities: {l.EntitiesById.Count}", 6, hy);
+		batch.Draw($"level entities: {level.EntitiesById.Count}", 6, hy);
 		hy += dy;
 		batch.Draw($"hovering pos: {Game.GameLogic.HoverPos}", 6, hy);
 		hy += dy;
-		BlockState state = l.GetBlock(Game.GameLogic.HoverPos);
+		BlockState state = level.GetBlock(Game.GameLogic.HoverPos);
 		batch.Draw($"hovering block: {state.Block.Uid.ToString()}, meta = {state.Meta}", 6, hy);
 		hy += dy;
 

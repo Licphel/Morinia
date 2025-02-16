@@ -17,8 +17,7 @@ public class FeatureOre : Feature
 		IsSurfacePlaced = false;
 		TryTimesPerChunk = clusters;
 		Replacables = new HashSet<Block>(rep);
-		Range = new Vector2(0, Chunk.SeaLevel);
-
+		
 		this.state = state;
 		this.spread = spread;
 	}
@@ -39,7 +38,7 @@ public class FeatureOre : Feature
 				float d = FloatMath.Sqrt(i * i + j * j);
 				float c = 1;
 				if(d > spread / 2f) c = (spread - d) * 0.1f + 0.5f;
-				if(seed.NextFloat() < c && Replacables.Contains(level.GetBlock(x1, y1).Block))
+				if((c == 1 || seed.NextFloat() < c) && Replacables.Contains(level.GetBlock(x1, y1).Block))
 				{
 					level.SetBlock(state, x1, y1);
 				}

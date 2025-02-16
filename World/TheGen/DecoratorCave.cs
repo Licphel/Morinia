@@ -7,9 +7,9 @@ public class DecoratorCave : Decorator
 {
 
 	bool init;
-	INoise noise1;
-	INoise noise2;
-	INoise noise3;
+	Noise noise1;
+	Noise noise2;
+	Noise noise3;
 
 	public override DecoratorType Type => DecoratorType.FOLLOWING;
 
@@ -25,9 +25,9 @@ public class DecoratorCave : Decorator
 		init = true;
 
 		//use level seed. make caves connected.
-		noise1 = new ComplexNoise(level.Seed.Copyx(3), 1);
-		noise2 = new ComplexNoise(level.Seed.Copyx(6), 1);
-		noise3 = new ComplexNoise(level.Seed.Copyx(9), 1);
+		noise1 = new NoiseOctave(level.Seed.Copyx(3), 1);
+		noise2 = new NoiseOctave(level.Seed.Copyx(6), 1);
+		noise3 = new NoiseOctave(level.Seed.Copyx(9), 1);
 	}
 
 	public override void Decorate(Level level, Chunk chunk, int x, int y)

@@ -29,35 +29,32 @@ public class Blocks
 	public static Block MapleLog = Registry.Register("maple_log", new BlockLog()).DeriveItem();
 	public static Block MapleLeaves = Registry.Register("maple_leaves", new BlockLeaves()).DeriveItem();
 
+	public static Block SoilPoor = Registry.Register("soil_poor", new BlockSoil()).DeriveItem();
+	public static Block SoilNorm = Registry.Register("soil_norm", new BlockSoil()).DeriveItem();
+	public static Block SoilLoam = Registry.Register("soil_loam", new BlockSoil()).DeriveItem();
 	//STONES
 	//-SEDIMENTARY
 	public static Block Limestone = Registry.Register("limestone", new BlockRock()).DeriveItem();
-	public static Block LimestoneSoil = Registry.Register("limestone_soil", new BlockSoil()).DeriveItem();
 	public static Block LimestoneCoalOre = Registry.Register("limestone_coal_ore", new BlockRock()).DeriveItem();
 
-	public static Block Hornstone = Registry.Register("hornstone", new BlockRock()).DeriveItem();
-	public static Block HornstoneSoil = Registry.Register("hornstone_soil", new BlockSoil()).DeriveItem();
-	public static Block HornstoneCoalOre = Registry.Register("hornstone_coal_ore", new BlockRock()).DeriveItem();
+	public static Block Dolomite = Registry.Register("dolomite", new BlockRock()).DeriveItem();
+	public static Block DolomiteCoalOre = Registry.Register("dolomite_coal_ore", new BlockRock()).DeriveItem();
 
 	//-METAMORPHIC
 	public static Block Phyllite = Registry.Register("phyllite", new BlockRock()).DeriveItem();
-	public static Block PhylliteSoil = Registry.Register("phyllite_soil", new BlockSoil()).DeriveItem();
 
 	public static Block Marble = Registry.Register("marble", new BlockRock()).DeriveItem();
-	public static Block MarbleSoil = Registry.Register("marble_soil", new BlockSoil()).DeriveItem();
 
 	//-EFFUSIVE
 	public static Block Basalt = Registry.Register("basalt", new BlockRock()).DeriveItem();
-	public static Block BasaltSoil = Registry.Register("basalt_soil", new BlockSoil()).DeriveItem();
 	public static Block BasaltIronOre = Registry.Register("basalt_iron_ore", new BlockRock()).DeriveItem();
 
+	public static Block Dacite = Registry.Register("dacite", new BlockRock()).DeriveItem();
+
 	//-INTRUDED
-	public static Block Granite = Registry.Register("granite", new BlockRock()).DeriveItem();
-	public static Block GraniteSoil = Registry.Register("granite_soil", new BlockSoil()).DeriveItem();
-	public static Block GraniteIronOre = Registry.Register("granite_iron_ore", new BlockRock()).DeriveItem();
+	public static Block Gabbro = Registry.Register("gabbro", new BlockRock()).DeriveItem();
 
 	public static Block Diorite = Registry.Register("diorite", new BlockRock()).DeriveItem();
-	public static Block DioriteSoil = Registry.Register("diorite_soil", new BlockSoil()).DeriveItem();
 	public static Block DioriteIronOre = Registry.Register("diorite_iron_ore", new BlockRock()).DeriveItem();
 
 	//FURNITURE
@@ -68,21 +65,24 @@ public class Blocks
 	static Blocks()
 	{
 		RegisterRockSerie(NativeStoneType.Sedimentary, "limestone");
-		RegisterRockSerie(NativeStoneType.Sedimentary, "hornstone");
+		RegisterRockSerie(NativeStoneType.Sedimentary, "dolomite");
 		RegisterRockSerie(NativeStoneType.Metamorphic, "phyllite");
 		RegisterRockSerie(NativeStoneType.Metamorphic, "marble");
 		RegisterRockSerie(NativeStoneType.Effusive, "basalt");
-		RegisterRockSerie(NativeStoneType.Intruded, "granite");
+		RegisterRockSerie(NativeStoneType.Effusive, "dacite");
+		RegisterRockSerie(NativeStoneType.Intruded, "gabbro");
 		RegisterRockSerie(NativeStoneType.Intruded, "diorite");
+
+		SerieOfSoil.Poor = [SoilPoor.Instantiate(1), SoilPoor.Instantiate(0)];
+		SerieOfSoil.Norm = [SoilNorm.Instantiate(1), SoilNorm.Instantiate(0)];
+		SerieOfSoil.Loam = [SoilLoam.Instantiate(1), SoilLoam.Instantiate(0)];
 	}
 
-	static RockSerie RegisterRockSerie(NativeStoneType type, string name)
+	static SerieOfRock RegisterRockSerie(NativeStoneType type, string name)
 	{
-		var b1 = Registry[name];
-		var b2 = Registry[name + "_soil"];
-		Seed seed = new SeedLCG(b1.Uid);
-		RockSerie serie = new RockSerie(seed.NextFloat(), [b2.Instantiate(1), b2.Instantiate(0), b1.Instantiate(), b1.Instantiate()]);
-		RockSerie.Layers.Add(new(type, serie));
+		Block block = Registry[name];
+		SerieOfRock serie = new SerieOfRock([block.Instantiate(), block.Instantiate()]);
+		SerieOfRock.Layers.Add(new(type, serie));
 		return serie;
 	}
 
