@@ -4,6 +4,9 @@
 
 The sandbox game, Morinia.
 
+## License
+You'll notice that this repo is under a special license. See LICENSE.
+
 ### For developers
 To get started about modding for Morinia, go to the [wiki](https://github.com/Licphel/Morinia/wiki).
 ### Bug report
