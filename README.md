@@ -5,7 +5,7 @@
 The sandbox game, Morinia.
 
 ## License
-The whole software, including EACH FILE in this repository and each ART or SOUND asset of this game. They are under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0), a license that you can find [HERE](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
+The whole software, including EACH FILE in this repository and each ART or SOUND asset of this game (Not included in this repository, but in released versions). They are under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0), a license that you can find [HERE](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
 
 Copyright (c) 2025 Licphel
 
