@@ -14,7 +14,7 @@ public class BlockTessellatorMaskedRandcoord : BlockTessellatorMasked
 
 		if(icon is TexturePart part)
 		{
-			batch.Draw(part.Texture, x, y, w, h, part.u, part.v + PosToRand(part, x, y), 16, 16);
+			batch.Draw(part.Src, x, y, w, h, part.u, part.v + PosToRand(part, x, y), 16, 16);
 		}
 		else if(icon is Texture tex)
 		{
@@ -36,7 +36,7 @@ public class BlockTessellatorMaskedRandcoord : BlockTessellatorMasked
 
 		if(icon is TexturePart part)
 		{
-			batch.Draw(part.Texture, x, y, w, h, part.u, part.v, 16, 16);
+			batch.Draw(part.Src, x, y, w, h, part.u, part.v, 16, 16);
 		}
 		else if(icon is Texture tex)
 		{

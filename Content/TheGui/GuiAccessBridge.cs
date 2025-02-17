@@ -26,10 +26,7 @@ public class GuiAccessBridge : ElementGui
 		w = used.x;
 		h = used.y;
 	}
-
-	public override float ScaleMul => 2;
-	public override float FontScmul => 0.5f;
-
+	
 	public override void Reflush()
 	{
 		i = (int) (Size.x / 2 - w / 2);

@@ -19,7 +19,7 @@ public class GuiMenu : ElementGui
 	{
 		Celesphere.DrawCelesph(batch);
 
-		batch.Draw(GameTextures.GUI_MENU_TITLE_EN, Size.x / 2 - 800, Size.y - 300, 1600, 320);
+		batch.Draw(GameTextures.GuiMenuTitle, Size.x / 2 - 400, Size.y - 150, 800, 160);
 
 		base.Draw(batch);
 	}
@@ -29,8 +29,8 @@ public class GuiMenu : ElementGui
 		base.InitComponents();
 
 		float x = Size.x / 2f;
-		float y = Size.y - 280;
-		const float bw = 300;
+		float y = Size.y - 140;
+		const float bw = 150;
 
 		Buttons[0] = ComponentFactory.NewTextedButton(Lore.Translate("button.menu_new_game"), bw, () =>
 		{
@@ -62,7 +62,7 @@ public class GuiMenu : ElementGui
 	{
 		for(int i = 0; i < Buttons.Length; i++)
 		{
-			Buttons[i].Bound.LocateCentral(Size.x / 2f, Size.y - 260 - i * 30);
+			Buttons[i].Bound.LocateCentral(Size.x / 2f, Size.y - 130 - i * 15);
 		}
 	}
 

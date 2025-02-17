@@ -21,7 +21,7 @@ public class GuiLoad : ElementGui
 	{
 		base.Draw(batch);
 
-		batch.Draw(GamePreTextures.GuiSplashLogo, Size.x / 2 - 800, Size.y - 300, 1600, 320);
+		batch.Draw(GamePreTextures.GuiSplashLogo, Size.x / 2 - 400, Size.y - 150, 800, 160);
 		batch.Fill(20, 20, (Size.x - 40) * Loader.Progress, 1);
 	}
 

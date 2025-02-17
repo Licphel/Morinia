@@ -131,7 +131,8 @@ public interface IRecipeMatcher
 
 		public void TooltipSymbol(List<Lore> tooltips)
 		{
-			tooltips.Add(Lore.Translate("utexts.recipe_tag_acceptance", _tag.GetAbbreviatedID()));
+			tooltips.Add(Lore.Translate("utexts.recipe_tag_acceptance"));
+			tooltips.Add(Lore.Literal(_tag.GetAbbreviatedID()).Paint(0.45f, 0.65f, 0.85f, 0.65f));
 		}
 
 		public static TagItem Read(IBinaryCompound compound)

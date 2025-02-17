@@ -70,6 +70,7 @@ public class GameLogic
 			Level.Generator.Provide(Player.Pos.UnitX);
 			Player.Locate(Player.Pos.x, Level.GetChunk(Player.Pos.UnitX).Surface[Player.Pos.BlockX & 15] + 2);
 		}
+		
 		Player.IsPlayerControl = true;
 		Level.AddEntity(Player);
 

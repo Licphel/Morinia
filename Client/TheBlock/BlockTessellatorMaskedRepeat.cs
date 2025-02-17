@@ -30,7 +30,7 @@ public class BlockTessellatorMaskedRepeat : BlockTessellatorMasked
 		{
 			u += part.u;
 			v += part.v;
-			batch.Draw(part.Texture, x, y, w, h, u, v, 16, 16);
+			batch.Draw(part.Src, x, y, w, h, u, v, 16, 16);
 		}
 		else if(icon is Texture tex)
 		{
@@ -47,7 +47,7 @@ public class BlockTessellatorMaskedRepeat : BlockTessellatorMasked
 
 		if(icon is TexturePart part)
 		{
-			batch.Draw(part.Texture, x, y, w, h, part.u, part.v, 16, 16);
+			batch.Draw(part.Src, x, y, w, h, part.u, part.v, 16, 16);
 		}
 		else if(icon is Texture tex)
 		{

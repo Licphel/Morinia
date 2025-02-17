@@ -27,19 +27,12 @@ public class GameTextures
 	public static Texture GuiChest = Loads.Get("textures/gui/containers/chest.png");
 	public static Texture GuiFurnace = Loads.Get("textures/gui/containers/furnace.png");
 
-	public static NinePatch GUI_NP_B1 = new NinePatch(Loads.Get("textures/gui/widgets/button_0.png"));
-	public static NinePatch GUI_NP_B2 = new NinePatch(Loads.Get("textures/gui/widgets/button_1.png"));
-	public static NinePatch GUI_NP_B3 = new NinePatch(Loads.Get("textures/gui/widgets/button_2.png"));
-	public static Texture GUI_CB1 = Loads.Get("textures/gui/widgets/checkbox_0.png");
-	public static Texture GUI_CB2 = Loads.Get("textures/gui/widgets/checkbox_1.png");
-	public static Texture GUI_CB3 = Loads.Get("textures/gui/widgets/checkbox_2.png");
-
-	public static Texture GUI_MENU_BG = Loads.Get("textures/gui/menu_bg.png");
-	public static Texture GUI_MENU_TITLE_EN = Loads.Get("textures/gui/menu.png");
-	public static Texture GUI_MENU_TITLE_CN = Loads.Get("textures/gui/menu_chinese.png");
-	public static Texture GUI_WINDOW_CLOSER = Loads.Get("textures/gui/widgets/button_win_close.png");
-	public static Texture GUI_WINDOW_MID = Loads.Get("textures/gui/widgets/window_m.png");
-	public static Texture GUI_WINDOW_MID_EV = Loads.Get("textures/gui/widgets/window_m_event.png");
-	public static Texture GUI_WINDOW_LARGE = Loads.Get("textures/gui/widgets/window_l.png");
+	public static Texture Button = Loads.Get("textures/gui/widgets/button.png");
+	public static NinePatch ButtonP1 = new NinePatch(TexturePart.BySize(Button, 0, 0, 12, 12));
+	public static NinePatch ButtonP2 = new NinePatch(TexturePart.BySize(Button, 0, 12, 12, 12));
+	public static NinePatch ButtonP3 = new NinePatch(TexturePart.BySize(Button, 0, 24, 12, 12));
+	
+	public static Texture GuiMenuTitle = Loads.Get("textures/gui/menu.png");
+	public static Texture GuiMenuTitleCN = Loads.Get("textures/gui/menu_chinese.png");
 
 }

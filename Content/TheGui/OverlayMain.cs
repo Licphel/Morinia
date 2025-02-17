@@ -34,7 +34,6 @@ public class OverlayMain : ElementGui
 
 		const float w = 256f;
 		const float h = 20;
-		const float s = 2f;
 		const float lptr = 0;
 		const float dptr = 0;
 		const float lptri = 1;
@@ -44,38 +43,48 @@ public class OverlayMain : ElementGui
 		const float lblank = 34;
 
 
-		float bx = (Size.x - w * s) / 2;
-		float by = 2 * s;
+		float bx = (Size.x - w) / 2;
+		float by = 2;
 
 		EntityPlayer player = Game.GameLogic.Player;
 		Level level = player.Level;
 
-		if(player.Pos.y < 3)
+		bool changelayout = /* player.Pos.y < 3 */ false;
+
+		if(changelayout)
 		{
-			by = Size.y - h - 12 * s;
+			by = Size.y - h - 12;
 		}
 
 		//ItemCaps Slots
-		batch.Draw(GameTextures.Hotbar, bx, by, w * s, h * s, 0, 0, w, h);
-		batch.Draw(GameTextures.Hotbar, bx + lblank * s + lptr * s + (st + 1) * player.InvCursor * s, by + dptr * s, st * s, st * s, 0, off, st, st);
+		batch.Draw(GameTextures.Hotbar, bx, by, w, h, 0, 0, w, h);
+		batch.Draw(GameTextures.Hotbar, bx + lblank + lptr + (st + 1) * player.InvCursor, by + dptr, st, st, 0, off, st, st);
 
 		for(int i = 0; i < 9; i++)
 		{
 			ItemStack stack = player.Inv.Get(i);
-			ItemRendering.GetTessellator(stack).Draw(batch, bx + lblank * s + (lptri + 1) * s + (st + 1) * i * s, by + (dptri + 1) * s, 16 * s, 16 * s, stack);
+			ItemRendering.GetTessellator(stack).Draw(batch, bx + lblank + (lptri + 1) + (st + 1) * i, by + (dptri + 1), 16, 16, stack);
 		}
 		
-		batch.Color4(0, 0, 0, 0.5f);
 		Block block = level.GetBlock(Game.GameLogic.HoverPos).Block;
+		
 		if(block != Block.Empty)
 		{
 			string name = I18N.GetText($"{block.Uid.Space}:blocks.{block.Uid.Key}");
+			string fromw = block.Uid.Space;
 			GlyphBounds gb = batch.Font.GetBounds(name);
-			float frw = gb.Width + 16;
-			float frh = gb.Height + 12;
-			batch.Fill((Size.x - frw) / 2, Size.y - frh - 12, frw, frh);
+			GlyphBounds gb1 = batch.Font.GetBounds(fromw);
+			float frw = Math.Max(gb.Width, gb1.Width) + 8;
+			float frh = gb.Height + gb1.Height + 6;
+
+			float yd = changelayout ? -18 : 0;
+			
+			batch.Draw(ElementGui.DefaultTooltipPatches, (Size.x - frw) / 2, Size.y - frh - 6 + yd, frw, frh);
+			
+			batch.Draw(name, Size.x / 2, Size.y - frh + 5 + yd, Align.CENTER);
+			batch.Color4(1, 1, 1, 0.5f);
+			batch.Draw(fromw, Size.x / 2, Size.y - frh - 3 + yd, Align.CENTER);
 			batch.NormalizeColor();
-			batch.Draw(name, (Size.x - frw) / 2 + 8, Size.y - frh - 6);
 		}
 
 		//
@@ -88,9 +97,9 @@ public class OverlayMain : ElementGui
 		EntityPlayer p = player;
 
 		float hy = 4;
-		const float dy = 18;
+		const float dy = 9;
 
-		batch.Draw($"location: [x = {p.Pos.x}, y = {p.Pos.y}]", 6, hy);
+		batch.Draw($"location: [x = {p.Pos.x}, y = {p.Pos.y}, c = {p.Pos.UnitX}]", 6, hy);
 		hy += dy;
 		batch.Draw($"time: [c/t = {level.Ticks}, d/t = {level.TicksPerDay}]", 6, hy);
 		hy += dy;

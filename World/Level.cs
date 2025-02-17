@@ -19,7 +19,7 @@ public sealed class Level : LevelBasic
 	public readonly ConcurrentDictionary<int, Chunk> ChunkMap = new();
 	public readonly ConcurrentDictionary<int, Chunk> ChunkMaskMap = new();
 
-	public readonly List<Chunk> ChunkSafeList = new List<Chunk>();
+	public readonly HashSet<Chunk> ChunkSetSafe = new HashSet<Chunk>();
 	public Queue<Response> ChunkActionsQueue = new Queue<Response>();
 	public ChunkIO ChunkIO;
 	public Dictionary<long, Entity> EntitiesById = new Dictionary<long, Entity>();
@@ -35,7 +35,7 @@ public sealed class Level : LevelBasic
 	public override LightEngine LightEngine { get; }
 	public override ParticleEngine ParticleEngine { get; }
 
-	public override IEnumerable<Chunk> ActiveChunks => ChunkSafeList;
+	public override IEnumerable<Chunk> ActiveChunks => ChunkSetSafe;
 	public override long Ticks { get; set; }
 	public long TicksPerDay => 60 * 60 * 24;
 
@@ -57,7 +57,7 @@ public sealed class Level : LevelBasic
 
 		ChunkActionsQueue.Enqueue(() =>
 		{
-			ChunkSafeList.Add(chunk);
+			ChunkSetSafe.Add(chunk);
 		});
 	}
 
@@ -70,7 +70,7 @@ public sealed class Level : LevelBasic
 		{
 			ChunkActionsQueue.Enqueue(() =>
 			{
-				ChunkSafeList.Remove(chk);
+				ChunkSetSafe.Remove(chk);
 				chk.OnUnloaded();
 			});
 		}
@@ -218,6 +218,17 @@ public sealed class Level : LevelBasic
 		while(ChunkActionsQueue.Count > 0)
 			ChunkActionsQueue.Dequeue()?.Invoke();
 
+		if(TimeSchedule.PeriodicTask(1))
+		{
+			var set1 = new HashSet<Chunk>(ChunkMap.Values);
+			var set2 = ChunkSetSafe;
+
+			if(!set1.SetEquals(set2))
+			{
+				Logger.Fatal("Some chunks go wrong - Maybe they are missing. Crashed!");
+			}
+		}
+
 		Ticks++;
 		ChunkIO._CheckOldBuffers(this);
 
@@ -239,7 +250,7 @@ public sealed class Level : LevelBasic
 			foreach(IBinaryCompound compound in list)
 			{
 				int coord = compound.Get<int>("coord");
-				Chunk mask = Generator.ProvideEmpty(coord);
+				Chunk mask = new Chunk(this, coord);
 				mask.Read(compound.GetCompoundSafely("data"));
 				ChunkMaskMap[coord] = mask;
 			}
@@ -258,6 +269,8 @@ public sealed class Level : LevelBasic
 
 	public void Save()
 	{
+		Logger.Info("Level's saving...", true);
+		
 		foreach(Chunk chunk in ActiveChunks)
 		{
 			ChunkIO.WriteToBuffer(chunk, false);
@@ -291,6 +304,8 @@ public sealed class Level : LevelBasic
 		overall.Set("player", compound1);
 
 		BinaryIO.Write(overall, LevelSave);
+		
+		Logger.Fix("Done!");
 	}
 
 }

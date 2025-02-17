@@ -64,6 +64,7 @@ public sealed class Chunk : ChunkBasic
 	public void OnLoaded()
 	{
 		IsLoadedUp = true;
+		Dirty = true;
 	}
 
 	public void OnUnloaded()

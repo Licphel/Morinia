@@ -30,7 +30,7 @@ public class Blocks
 	public static Block MapleLeaves = Registry.Register("maple_leaves", new BlockLeaves()).DeriveItem();
 
 	public static Block SoilPoor = Registry.Register("soil_poor", new BlockSoil()).DeriveItem();
-	public static Block SoilNorm = Registry.Register("soil_norm", new BlockSoil()).DeriveItem();
+	public static Block SoilOrdinary = Registry.Register("soil_ordinary", new BlockSoil()).DeriveItem();
 	public static Block SoilLoam = Registry.Register("soil_loam", new BlockSoil()).DeriveItem();
 	//STONES
 	//-SEDIMENTARY
@@ -74,7 +74,7 @@ public class Blocks
 		RegisterRockSerie(NativeStoneType.Intruded, "diorite");
 
 		SerieOfSoil.Poor = [SoilPoor.Instantiate(1), SoilPoor.Instantiate(0)];
-		SerieOfSoil.Norm = [SoilNorm.Instantiate(1), SoilNorm.Instantiate(0)];
+		SerieOfSoil.Ordinary = [SoilOrdinary.Instantiate(1), SoilOrdinary.Instantiate(0)];
 		SerieOfSoil.Loam = [SoilLoam.Instantiate(1), SoilLoam.Instantiate(0)];
 	}
 

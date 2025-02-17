@@ -116,15 +116,9 @@ public class GeneratorImpl : Generator
 
 	void submitToLevel(Chunk chunk, int coord)
 	{
-		Chunk mask = Level.ConsumeChunkMask(coord);
-		if(mask != null)
-		{
-			mask.BlockMap.Cover(chunk.BlockMap);
-			mask.LiquidMap.Cover(chunk.LiquidMap);
-		}
+		Level.ConsumeChunkMask(coord);
 		chunk.OnLoaded();
-		chunk.Dirty = true;
-		Level.ChunkIO.WriteToBuffer(chunk, false);
+		Level.SetChunk(coord, chunk);
 	}
 
 	void _Provide(Chunk chunk, int coord)

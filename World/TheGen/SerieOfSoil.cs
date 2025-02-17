@@ -7,7 +7,7 @@ public class SerieOfSoil
 {
 
 	public static BlockState[] Poor;
-	public static BlockState[] Norm;
+	public static BlockState[] Ordinary;
 	public static BlockState[] Loam;
 
 	public static BlockState[] GetProperType(float rain, float temp)
@@ -16,7 +16,7 @@ public class SerieOfSoil
 			return Poor;
 		if(rain > 0.35f && temp > 0.45f && temp < 0.65f)
 			return Loam;
-		return Norm;
+		return Ordinary;
 	}
 
 }
