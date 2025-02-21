@@ -36,14 +36,8 @@ public class AccessBridge
 
 	public void OnStoppedUsage()
 	{
-		if(!Pickup.IsEmpty)
-		{
-			EntityItem entity = new EntityItem();
-			entity.Stack = Pickup;
-			Level.AddEntity(entity, Player.Pos);
-		}
-		Pickup = ItemStack.Empty;
-
+		DoAction(AccessBridgeAction.THROW);
+		
 		foreach(Slot slot in Slots)
 		{
 			if(!slot.Storage)
@@ -73,6 +67,18 @@ public class AccessBridge
 
 	public void DoAction(AccessBridgeAction action)
 	{
+		if(action == AccessBridgeAction.THROW)
+		{
+			if(!Pickup.IsEmpty)
+			{
+				EntityItem entity = new EntityItem();
+				entity.Stack = Pickup;
+				entity.Protection = 5;
+				Level.AddEntity(entity, Player.Pos);
+				Pickup = ItemStack.Empty;
+			}
+		}
+
 		if(ChosenSlot == null)
 		{
 			return;

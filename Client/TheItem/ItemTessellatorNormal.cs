@@ -17,7 +17,7 @@ public class ItemTessellatorNormal : ItemTessellator
 			if(ico == null && stack.Item is ItemBlockPlacer placer)
 			{
 				Block block = placer.GetBlockPlaced(stack);
-				BlockState state = block.GetOrCreatePalette(0);
+				BlockState state = block.GetStoredState(0);
 				BlockRendering.GetTessellator(state).DrawItemSymbol(batch, state, x, y, w, h);
 			}
 			else

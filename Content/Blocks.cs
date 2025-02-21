@@ -50,9 +50,11 @@ public class Blocks
 	public static Block BasaltIronOre = Registry.Register("basalt_iron_ore", new BlockRock()).DeriveItem();
 
 	public static Block Dacite = Registry.Register("dacite", new BlockRock()).DeriveItem();
+	public static Block DaciteIronOre = Registry.Register("dacite_iron_ore", new BlockRock()).DeriveItem();
 
 	//-INTRUDED
 	public static Block Gabbro = Registry.Register("gabbro", new BlockRock()).DeriveItem();
+	public static Block GabbroIronOre = Registry.Register("gabbro_iron_ore", new BlockRock()).DeriveItem();
 
 	public static Block Diorite = Registry.Register("diorite", new BlockRock()).DeriveItem();
 	public static Block DioriteIronOre = Registry.Register("diorite_iron_ore", new BlockRock()).DeriveItem();

@@ -26,14 +26,17 @@ public class EntityPlayer : Creature
 
 	readonly Tessellator TheTessellator;
 
-	public EntityPlayer(int yof = 0)
+	public EntityPlayer(int yof = 36)
 	{
 		Box.Resize(8 / 16f, 18 / 16f);
 		VisualSize.x = 12 / 16f;
 		VisualSize.y = 18 / 16f;
 		Inv = new Inventory(27);
 		TheTessellator = new Tessellator(yof);
-		Health = MaxHealth = 100000;
+		Health = MaxHealth = 1000;
+		Mana = MaxMana = 1000;
+		Hunger = MaxHunger = 1000;
+		Thirst = MaxThirst = 1000;
 	}
 
 	public override EntityBuilder Builder => Entities.Player;
@@ -49,7 +52,7 @@ public class EntityPlayer : Creature
 
 		Box box2 = Box;
 		box2.Scale(4f, 3f);
-		List<Entity> lst = Level.GetNearbyEntities(box2, e => e is EntityItem);
+		List<Entity> lst = Level.GetNearbyEntities(box2, e => e is EntityItem itee && itee.Protection <= 0);
 
 		foreach(Entity e in lst)
 		{
@@ -110,7 +113,7 @@ public class EntityPlayer : Creature
 
 	public override float CastLight(byte pipe)
 	{
-		return 1.2f;
+		return 1f;
 	}
 
 	public override EntityTessellator GetTessellator()

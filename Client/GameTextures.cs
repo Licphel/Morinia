@@ -21,13 +21,14 @@ public class GameTextures
 	public static Texture CeBg3 = Loads.Get("textures/ambient/background_4.png");
 	public static Texture UCeBg1 = Loads.Get("textures/ambient/underground_1.png");
 	public static Texture UCeBg2 = Loads.Get("textures/ambient/underground_2.png");
-	public static Texture Hotbar = Loads.Get("textures/gui/overlays/hotbar.png");
+	
+	public static Texture Hotbar = Loads.Get("textures/gui/hotbar.png");
 	public static Texture RecipeEntry = Loads.Get("textures/gui/containers/recipe_entry.png");
 	public static Texture GuiInventory = Loads.Get("textures/gui/containers/inventory.png");
 	public static Texture GuiChest = Loads.Get("textures/gui/containers/chest.png");
 	public static Texture GuiFurnace = Loads.Get("textures/gui/containers/furnace.png");
 
-	public static Texture Button = Loads.Get("textures/gui/widgets/button.png");
+	public static Texture Button = Loads.Get("textures/gui/button.png");
 	public static NinePatch ButtonP1 = new NinePatch(TexturePart.BySize(Button, 0, 0, 12, 12));
 	public static NinePatch ButtonP2 = new NinePatch(TexturePart.BySize(Button, 0, 12, 12, 12));
 	public static NinePatch ButtonP3 = new NinePatch(TexturePart.BySize(Button, 0, 24, 12, 12));

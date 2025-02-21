@@ -19,7 +19,7 @@ public partial class Block : Tag
 	// Paletting.
 	public Dictionary<int, BlockState> StatePaletteCache = new();
 
-	public BlockState GetOrCreatePalette(int meta)
+	public BlockState GetStoredState(int meta = 0)
 	{
 		if(StatePaletteCache.TryGetValue(meta, out BlockState state))
 			return state;

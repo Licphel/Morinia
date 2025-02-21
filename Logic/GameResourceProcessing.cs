@@ -62,7 +62,7 @@ public class GameResourceProcessing
 	static void LoadFontMaps()
 	{
 		Texture[] pictures = new Texture[256];
-
+		
 		for(int i = 0; i < pictures.Length; i++)
 		{
 			Texture picture = Loads.Get("textures/characters/unicode_page_" + i + ".png");

@@ -29,6 +29,7 @@ public class GameLogic
 	public float cx, cy;
 	public BlockPos HoverPos;
 	public BlockPos BreakPos;
+	public BlockState HoverBlockState = BlockState.Empty;
 	public float BreakProgress;
 	public float Hdnow;
 	public Level Level;
@@ -127,7 +128,7 @@ public class GameLogic
 			float cmy = Transform.Cursor.y;
 
 			HoverPos = new BlockPos(FloatMath.Floor(cmx), FloatMath.Floor(cmy), KeyBinds.CONTROL.Holding() ? 0 : 1);
-			BlockState HoverInst = Level.GetBlock(HoverPos);
+			BlockState HoverInst = HoverBlockState = Level.GetBlock(HoverPos);
 
 			//Use items or click blocks
 			if(KeyBinds.PLACE.Holding())

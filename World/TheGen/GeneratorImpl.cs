@@ -116,7 +116,12 @@ public class GeneratorImpl : Generator
 
 	void submitToLevel(Chunk chunk, int coord)
 	{
-		Level.ConsumeChunkMask(coord);
+		Chunk mask = Level.ConsumeChunkMask(coord);
+		if(mask != null)
+		{
+			mask.BlockMap.Cover(chunk.BlockMap);
+			mask.LiquidMap.Cover(chunk.LiquidMap);
+		}
 		chunk.OnLoaded();
 		Level.SetChunk(coord, chunk);
 	}
@@ -294,7 +299,7 @@ public class GeneratorImpl : Generator
 
 		ctx.Biome = bm;
 
-		float uniq = stoneuniq.Generate(x / 128f, y / 128f, 1);
+		float uniq = stoneuniq.Generate(x / 128f, y / 64f, 1);
 		if(surface - y > Chunk.RockTransverse)
 			uniq = 1 - uniq;
 		ctx.RockSerie = SerieOfRock.GetProperType(uniq, surface - y);

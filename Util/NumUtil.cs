@@ -2,12 +2,35 @@
 
 namespace Morinia.Util;
 
-public class RomanNumberal
+public class NumUtil
 {
+
+	public static string GetCompress(float i)
+	{
+		if(i >= 1000_000_000)
+		{
+			string formatted = Math.Round(i / 1000_000_000d, 2).ToString("0.#");
+			return formatted + "G";
+		}
+		
+		if(i >= 1000_000)
+		{
+			string formatted = Math.Round(i / 1000_000d, 2).ToString("0.#");
+			return formatted + "M";
+		}
+		
+		if(i >= 1000)
+		{
+			string formatted = Math.Round(i / 1000d, 2).ToString("0.#");
+			return formatted + "K";
+		}
+
+		return i.ToString();
+	}
 
 	static readonly string[] Namings = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
-	public static string Generate(int i)
+	public static string GetRoman(int i)
 	{
 		StringBuilder builder = new StringBuilder();
 		while(i > 0)

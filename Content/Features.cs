@@ -16,10 +16,9 @@ public class Features
 
 	public static Feature Vine = Registry.Register("vine", new FeatureVine());
 
-	public static Feature LimestoneCoalOreCluster = Registry.Register("limestone_coal_ore", new FeatureOre(Blocks.LimestoneCoalOre.Instantiate(), 4, 5, Blocks.Limestone));
-	public static Feature BasaltIronOreCluster = Registry.Register("basalt_iron_ore", new FeatureOre(Blocks.BasaltIronOre.Instantiate(), 3, 5, Blocks.Basalt));
-	public static Feature DioriteIronOreCluster = Registry.Register("diorite_iron_ore", new FeatureOre(Blocks.DioriteIronOre.Instantiate(), 3, 5, Blocks.Diorite));
-
+	public static Feature CoalOreCluster = Registry.Register("coal_ore", new FeatureOre(4, 5));
+	public static Feature IronOreCluster = Registry.Register("iron_ore", new FeatureOre(3, 5));
+	
 	public static Feature WaterLake = Registry.Register("water_lake", new FeatureLake(Liquids.Water, 4, 0.75f));
 	
 }

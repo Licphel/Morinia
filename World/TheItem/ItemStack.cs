@@ -213,6 +213,8 @@ public sealed class ItemStack : IMetable
 
 	public void GetTooltips(List<Lore> tooltips)
 	{
+		if(IsEmpty)
+			return;
 		Item.GetTooltips(this, tooltips);
 	}
 

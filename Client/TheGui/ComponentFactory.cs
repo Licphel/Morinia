@@ -16,8 +16,6 @@ public class ComponentFactory
 		button.Bound.Resize(w, 14);
 		if(click != null) button.OnLeftFired += click;
 		button.Icons = [GameTextures.ButtonP1, GameTextures.ButtonP2, GameTextures.ButtonP3];
-		button.TextOffset.x = 0;
-		button.TextOffset.y = 1f;
 		return button;
 	}
 

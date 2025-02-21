@@ -8,7 +8,10 @@ namespace Morinia.World.ThePhysic;
 public abstract class Creature : Entity
 {
 
-	public int Health, MaxHealth;
+	public float Health, MaxHealth;
+	public float Hunger, MaxHunger, HungerRate = 0.25f;
+	public float Mana, MaxMana;
+	public float Thirst, MaxThirst, ThirstRate = 1;
 	public int HurtCooldown;
 
 	public CreatureMind Mind = new CreatureMind();
@@ -32,13 +35,24 @@ public abstract class Creature : Entity
 				BlockStepping.GetMaterial().SoundStep.PlaySound();
 			}
 		}
+
+		if(TimeSchedule.PeriodicTask(1))
+		{
+			Hunger -= HungerRate;
+			Thirst -= ThirstRate;
+
+			if(Hunger <= 0 || Thirst <= 0)
+			{
+				Hit(1);
+			}
+		}
 	}
 
-	public int Hit(float value)
+	public float Hit(float value)
 	{
 		if(HurtCooldown <= 0)
 		{
-			Health -= (int) value;
+			Health -= value;
 			if(Health <= 0)
 			{
 				Health = 0;

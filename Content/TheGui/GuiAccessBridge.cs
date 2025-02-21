@@ -116,6 +116,9 @@ public class GuiAccessBridge : ElementGui
 		if(KeyBinds.BREAK.Pressed() && !KeyBinds.OPERATION.Holding())
 		{
 			action = AccessBridgeAction.SWAP_PICKUP;
+
+			if(xc < 0 || yc < 0 || xc > w || yc > w)
+				action = AccessBridgeAction.THROW;
 		}
 
 		if(KeyBinds.PLACE.Pressed())

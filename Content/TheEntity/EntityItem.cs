@@ -15,6 +15,7 @@ public class EntityItem : Entity
 {
 
 	public ItemStack Stack = ItemStack.Empty;
+	public float Protection = 0;
 
 	public EntityItem()
 	{
@@ -51,7 +52,7 @@ public class EntityItem : Entity
 		Move();
 		CheckVelocity();
 
-		if(TimeSchedule.PeriodicTask(2))
+		if(Protection <= 0 && TimeSchedule.PeriodicTask(2))
 		{
 			Box box2 = Box;
 			box2.Scale(2, 2);
@@ -59,6 +60,8 @@ public class EntityItem : Entity
 			if(lst.Count > 4)
 				lst.ForEach(e => Absorb((EntityItem) e));
 		}
+
+		Protection -= Time.Delta;
 	}
 
 	void Absorb(EntityItem e)
@@ -92,7 +95,7 @@ public class EntityItem : Entity
 		}
 	}
 
-	//wouldn't be fully picked up sometimes.
+	//wonn't be fully picked up sometimes.
 	public void Pickup(Inventory inv)
 	{
 		ItemStack trystack = inv.Add(Stack.Copy());

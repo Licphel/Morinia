@@ -80,7 +80,7 @@ public unsafe class BlockMap
 		WriteBytes(idx, obj.Block.Uid);
 		WriteByte(idx + sizeof(int), (byte) obj.Meta);
 		Block old = Blocks.Registry[oldid];
-		BlockState oldstate = old.GetOrCreatePalette(oldmeta);
+		BlockState oldstate = old.GetStoredState(oldmeta);
 		return oldstate;
 	}
 
@@ -90,7 +90,7 @@ public unsafe class BlockMap
 		int id = ReadBytes(idx);
 		int meta = ReadByte(idx + sizeof(int));
 		Block block = Blocks.Registry[id];
-		BlockState state = block.GetOrCreatePalette(meta);
+		BlockState state = block.GetStoredState(meta);
 		return state;
 	}
 
