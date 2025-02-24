@@ -107,7 +107,8 @@ public class Game
 				if(gui != null)
 				{
 					//keep the font scale still.
-					if(batch.Font != null) batch.Font.Scale = gui.FontScmul;
+					float fm = gui.FontScmul;
+					if(batch.Font != null) batch.Font.Scale = fm;
 					gui.Draw(batch);
 					if(batch.Font != null) batch.Font.Scale = 1;
 				}

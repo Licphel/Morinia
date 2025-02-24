@@ -34,10 +34,10 @@ public class GeneratorImpl : Generator
 		//pay attention to this noise, it shouldn't have sth to do with the section coord!
 		noise = new NoiseOctave(level.Seed.Copyx(183), 2);//some magic numbers...
 
-		rainfall = new NoiseOctave(level.Seed.Copyx(923), 2);
-		temperature = new NoiseOctave(level.Seed.Copyx(1256), 2);
-		activeness = new NoiseOctave(level.Seed.Copyx(1847), 1);
-		continent = new NoiseOctave(level.Seed.Copyx(2508), 1);
+		rainfall = new NoisePerlin(level.Seed.Copyx(923));
+		temperature = new NoisePerlin(level.Seed.Copyx(1256));
+		activeness = new NoiseVoronoi(level.Seed.Copyx(1847));
+		continent = new NoisePerlin(level.Seed.Copyx(2508));
 		stoneuniq = new NoiseVoronoi(level.Seed.Copyx(6254));
 
 		AddDecorator(new DecoratorCave());//add it first and caves should be decorated more then!
@@ -169,13 +169,13 @@ public class GeneratorImpl : Generator
 						chunk.SetBlock(soilType[0], x, y);
 						chunk.SetBlock(soilType[1], x, y, 0);
 					}
-					else if(dist <= soildep)
+					else if(dist <= soildep && (soildep == 1 || seed.NextFloat() < (soildep + 1 - dist) / 2f))
 					{
 						BlockState state = soilType[1];
 						chunk.SetBlock(state, x, y);
 						chunk.SetBlock(state, x, y, 0);
 					}
-					else if(dist <= soildep + 4)
+					else if(dist <= soildep + 4 && seed.NextFloat() < (soildep + 5 - dist) / 2f)
 					{
 						BlockState state = rockType[0];
 						chunk.SetBlock(state, x, y);
@@ -254,11 +254,11 @@ public class GeneratorImpl : Generator
 
 	public void GetLocationData(int x, int y, int surface, GenerateContext ctx)
 	{
-		float temp = ctx.Temp = temperature.Generate(x / 32f / 16f, y / 256f, 1);
-		float rain = ctx.Rain = rainfall.Generate(x / 32f / 16f, y / 256f, 1);
-		float act = ctx.Act = activeness.Generate(x / 32f / 16f, y / 128f, 1);
+		float temp = ctx.Temp = temperature.Generate(x / 512f, y / 256f, 1);
+		float rain = ctx.Rain = rainfall.Generate(x / 512f, y / 256f, 1);
+		float act = ctx.Act = activeness.Generate(x / 128f, y / 128f, 1);
 		float dep;
-		float cont = ctx.Cont = continent.Generate(x / 32f / 16f, y / 1024f, 1);
+		float cont = ctx.Cont = continent.Generate(x / 512f, 1, 1);
 
 		if(y >= Chunk.SeaLevel + Chunk.Overland || y <= Chunk.SeaLevel - Chunk.Overland)
 			cont = 1;
@@ -299,11 +299,11 @@ public class GeneratorImpl : Generator
 
 		ctx.Biome = bm;
 
-		float uniq = stoneuniq.Generate(x / 128f, y / 64f, 1);
+		float uniq = stoneuniq.Generate(x / 512f, y / 256f, 1);
 		if(surface - y > Chunk.RockTransverse)
 			uniq = 1 - uniq;
-		ctx.RockSerie = SerieOfRock.GetProperType(uniq, surface - y);
-		ctx.SoilSerie = SerieOfSoil.GetProperType(rain, temp) ?? ctx.RockSerie;
+		ctx.RockSerie = EnvironRock.GetProperType(uniq, surface - y);
+		ctx.SoilSerie = EnvironSoil.GetProperType(rain, temp) ?? ctx.RockSerie;
 	}
 
 	static float _IncS(float m, float v)

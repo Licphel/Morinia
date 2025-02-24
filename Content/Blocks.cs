@@ -75,16 +75,16 @@ public class Blocks
 		RegisterRockSerie(NativeStoneType.Intruded, "gabbro");
 		RegisterRockSerie(NativeStoneType.Intruded, "diorite");
 
-		SerieOfSoil.Poor = [SoilPoor.Instantiate(1), SoilPoor.Instantiate(0)];
-		SerieOfSoil.Ordinary = [SoilOrdinary.Instantiate(1), SoilOrdinary.Instantiate(0)];
-		SerieOfSoil.Loam = [SoilLoam.Instantiate(1), SoilLoam.Instantiate(0)];
+		EnvironSoil.Poor = [SoilPoor.Instantiate(1), SoilPoor.Instantiate(0)];
+		EnvironSoil.Ordinary = [SoilOrdinary.Instantiate(1), SoilOrdinary.Instantiate(0)];
+		EnvironSoil.Loam = [SoilLoam.Instantiate(1), SoilLoam.Instantiate(0)];
 	}
 
-	static SerieOfRock RegisterRockSerie(NativeStoneType type, string name)
+	static EnvironRock RegisterRockSerie(NativeStoneType type, string name)
 	{
 		Block block = Registry[name];
-		SerieOfRock serie = new SerieOfRock([block.Instantiate(), block.Instantiate()]);
-		SerieOfRock.Layers.Add(new(type, serie));
+		EnvironRock serie = new EnvironRock([block.Instantiate(), block.Instantiate()]);
+		EnvironRock.Layers.Add(new(type, serie));
 		return serie;
 	}
 

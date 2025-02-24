@@ -3,7 +3,7 @@ using Morinia.World.TheBlock;
 
 namespace Morinia.World.TheGen;
 
-public class SerieOfSoil
+public class EnvironSoil
 {
 
 	public static BlockState[] Poor;

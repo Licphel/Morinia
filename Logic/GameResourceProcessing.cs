@@ -13,6 +13,7 @@ using Morinia.World.TheDict;
 using Morinia.World.TheItem;
 using Morinia.World.TheLoot;
 using Morinia.World.TheRecipe;
+using OpenTK.Graphics.OpenGL;
 
 namespace Morinia.Logic;
 
@@ -43,7 +44,7 @@ public class GameResourceProcessing
 	{
 		loader.Scan(file.Goto("langs"), false);
 		loader.Scan(file.Goto("textures"), false);
-		loader.Enqueue(LoadFontMaps);
+		loader.Enqueue(() => LoadFontMaps(Options.FontType));
 		loader.Scan(file.Goto("musics"), false);
 		loader.Scan(file.Goto("sounds"), false);
 		loader.Scan(file.Goto("shaders"), false);
@@ -59,28 +60,58 @@ public class GameResourceProcessing
 				loader.Scan(file1, false);
 	}
 
-	static void LoadFontMaps()
+	static void LoadFontMaps(string type)
 	{
-		Texture[] pictures = new Texture[256];
+		if(type.StartsWith("bitmap"))
+		{
+			Texture[] pictures;
+			
+			if(type == "bitmap_fancyascii")
+			{
+				pictures = new Texture[257];
+				pictures[0] = Loads.Get("textures/characters/ascii.png");
 		
-		for(int i = 0; i < pictures.Length; i++)
-		{
-			Texture picture = Loads.Get("textures/characters/unicode_page_" + i + ".png");
-			pictures[i] = picture;
+				for(int i = 1; i < pictures.Length; i++)
+				{
+					Texture picture = Loads.Get("textures/characters/unicode_page_" + (i - 1) + ".png");
+					pictures[i] = picture;
+					picture.SetPixelRenderMode("Linear|Nearest|Repeat|Repeat");
+				}
+			}
+			else
+			{
+				pictures = new Texture[256];
+				
+				for(int i = 0; i < pictures.Length; i++)
+				{
+					Texture picture = Loads.Get("textures/characters/unicode_page_" + i + ".png");
+					pictures[i] = picture;
+					picture.SetPixelRenderMode("Linear|Nearest|Repeat|Repeat");
+				}
+			}
+
+			IBinaryCompound c = BinaryIO.Read(Game.ContentsFile.Goto("textures/characters/unicode_glyphs.bin"));
+
+			Font font = FontBitmap.Load(pictures, GetPage, c.Get<int[]>("x"), c.Get<int[]>("y"), c.Get<float[]>("w"), c.Get<int>("h"));
+			
+			SpriteBatch.Global.Font = font;
+
+			return;
+
+			static int GetPage(char ch)
+			{
+				bool fancy = Options.FontType == "bitmap_fancyascii";
+				if(ch < 128 && fancy) return 0;
+				return (int) (ch / 256f) + (fancy ? 1 : 0);
+			}
 		}
-
-		IBinaryCompound c = BinaryIO.Read(Game.ContentsFile.Goto("textures/characters/unicode_glyphs.bin"));
-
-		Font font = Font.Load(pictures, GetPage, c.Get<int[]>("x"), c.Get<int[]>("y"), c.Get<float[]>("w"), c.Get<int>("h"));
-
-		Loads.Load("textures/characters/unicode_glyphs.bin", font);
-		SpriteBatch.Global.Font = font;
-
-		return;
-
-		static int GetPage(char ch)
+		else if(type == "modern")
 		{
-			return (int) (ch / 256f);
+			FileHandle fh = FileSystem.GetLocal("contents/font_noto.otf");
+
+			Font font = OGLFontFreetype.Load([fh], 128, 16);
+			
+			SpriteBatch.Global.Font = font;
 		}
 	}
 
@@ -119,7 +150,8 @@ public class GameResourceProcessing
 		if(!file.Format.Equals("png", StringComparison.OrdinalIgnoreCase))
 			return;
 
-		Texture texture = new OGLTexture(file);
+		OGLTexture texture = new OGLTexture();
+		texture.Upload(file);
 		dynamic finalsub = texture;
 
 		if(resource.Key.StartsWith("textures/blocks")

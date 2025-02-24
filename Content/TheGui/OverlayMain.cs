@@ -42,27 +42,31 @@ public partial class OverlayMain : ElementGui
 
 		EntityPlayer p = player;
 
-		float hy = 4;
-		const float dy = 9;
+		float hy = 42;
+		const float dy = 7;
+		const float dx = 3;
+		batch.Font.Scale /= 1.5f;
 
-		batch.Draw($"location: [x = {p.Pos.x}, y = {p.Pos.y}, c = {p.Pos.UnitX}]", 6, hy);
+		batch.Draw($"location: [x = {p.Pos.x}, y = {p.Pos.y}, c = {p.Pos.UnitX}]", dx, hy);
 		hy += dy;
-		batch.Draw($"time: [c/t = {level.Ticks}, d/t = {level.TicksPerDay}]", 6, hy);
+		batch.Draw($"time: [c/t = {level.Ticks} %= {level.Ticks % level.TicksPerDay}, d/t = {level.TicksPerDay}]", dx, hy);
 		hy += dy;
-		batch.Draw($"level entities: {level.EntitiesById.Count}", 6, hy);
+		batch.Draw($"level entities: {level.EntitiesById.Count}", dx, hy);
 		hy += dy;
-		batch.Draw($"hovering pos: {Game.GameLogic.HoverPos}", 6, hy);
+		batch.Draw($"hovering pos: {Game.GameLogic.HoverPos}", dx, hy);
 		hy += dy;
 		BlockState state = level.GetBlock(Game.GameLogic.HoverPos);
-		batch.Draw($"hovering block: {state.Block.Uid.ToString()}, meta = {state.Meta}", 6, hy);
+		batch.Draw($"hovering block: {state.Block.Uid.ToString()}, meta = {state.Meta}", dx, hy);
 		hy += dy;
 
-		batch.Draw($"tps = {Application.Tps}, expected = {Application.MaxTps}", 6, hy);
+		batch.Draw($"tps = {Application.Tps}, expected = {Application.MaxTps}", dx, hy);
 		hy += dy;
-		batch.Draw($"fps = {Application.Fps}, expected = {Application.MaxFps}", 6, hy);
+		batch.Draw($"fps = {Application.Fps}, expected = {Application.MaxFps}", dx, hy);
 		hy += dy;
-		batch.Draw("* debugger (press F1 to hide)", 6, hy);
+		batch.Draw("Debugger (press F1 to hide)", dx, hy);
 		hy += dy;
+		
+		batch.Font.Scale *= 1.5f;
 	}
 
 }

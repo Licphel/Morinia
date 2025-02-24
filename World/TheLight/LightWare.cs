@@ -4,7 +4,7 @@ using Morinia.World.TheBlock;
 
 namespace Morinia.World.TheLight;
 
-public class LightWare
+public unsafe class LightWare
 {
 
 	public Chunk chunk;
@@ -30,57 +30,80 @@ public class LightWare
 		return farr;
 	}
 
-	public static void merge3(float[] arr, float x, float y, float z)
+	public static void merge3(float[] _arr, float x, float y, float z)
 	{
-		arr[0] *= x;
-		arr[1] *= y;
-		arr[2] *= z;
+		fixed(float* arr = _arr)
+		{
+			arr[0] *= x;
+			arr[1] *= y;
+			arr[2] *= z;
+		}
 	}
 
-	public static void merge3(float[] arr, float x)
+	public static void merge3(float[] _arr, float x)
 	{
-		arr[0] *= x;
-		arr[1] *= x;
-		arr[2] *= x;
+		fixed(float* arr = _arr)
+		{
+			arr[0] *= x;
+			arr[1] *= x;
+			arr[2] *= x;
+		}
 	}
 
 	public void GetVec4Out(ref Vector4 v, int i, float a)
 	{
-		float[] arr = coordsOut[i];
-		v.x = arr[0] * LightEngine.Amplifier;
-		v.y = arr[1] * LightEngine.Amplifier;
-		v.z = arr[2] * LightEngine.Amplifier;
-		v.w = 1;
+		float[] _arr = coordsOut[i];
+		fixed(float* arr = _arr)
+		{
+			v.x = arr[0] * LightEngine.Amplifier;
+			v.y = arr[1] * LightEngine.Amplifier;
+			v.z = arr[2] * LightEngine.Amplifier;
+			v.w = 1;
+		}
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public void writeCoords(float[][] color)
 	{
-		Array.Copy(coords[0], 0, color[0], 0, 3);
-		Array.Copy(coords[1], 0, color[1], 0, 3);
-		Array.Copy(coords[2], 0, color[2], 0, 3);
-		Array.Copy(coords[3], 0, color[3], 0, 3);
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public void extendAO(float[][] color, float addit = 1)
-	{
-		merge3(color[0], coordsAO[0] * addit);
-		merge3(color[1], coordsAO[1] * addit);
-		merge3(color[2], coordsAO[2] * addit);
-		merge3(color[3], coordsAO[3] * addit);
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public void extendCoords(float[][] color, float[] sunlight)
-	{
-		for(int i = 0; i < 4; i++)
+		fixed(float[]* coords = this.coords)
 		{
-			float[] c = color[i];
-			float[] c2 = coords[i];
-			c[0] = Math.Max(sunlight[0] * c2[0], c[0]);
-			c[1] = Math.Max(sunlight[1] * c2[1], c[1]);
-			c[2] = Math.Max(sunlight[2] * c2[2], c[2]);
+			Array.Copy(coords[0], 0, color[0], 0, 3);
+			Array.Copy(coords[1], 0, color[1], 0, 3);
+			Array.Copy(coords[2], 0, color[2], 0, 3);
+			Array.Copy(coords[3], 0, color[3], 0, 3);
+		}
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public void extendAO(float[][] _color, float addit = 1)
+	{
+		fixed(float* coordsAO = this.coordsAO)
+		{
+			fixed(float[]* color = _color)
+			{
+				merge3(color[0], coordsAO[0] * addit);
+				merge3(color[1], coordsAO[1] * addit);
+				merge3(color[2], coordsAO[2] * addit);
+				merge3(color[3], coordsAO[3] * addit);
+			}
+		}
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public void extendCoords(float[][] _color, float[] sunlight)
+	{
+		fixed(float[]* color = _color)
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				fixed(float* c2 = coords[i])
+				fixed(float* c = color[i])
+				{
+					c[0] = Math.Max(sunlight[0] * c2[0], c[0]);
+					c[1] = Math.Max(sunlight[1] * c2[1], c[1]);
+					c[2] = Math.Max(sunlight[2] * c2[2], c[2]);
+				}
+			}
 		}
 	}
 

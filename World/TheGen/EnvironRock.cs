@@ -3,10 +3,10 @@ using Morinia.World.TheBlock;
 
 namespace Morinia.World.TheGen;
 
-public class SerieOfRock
+public class EnvironRock
 {
 
-	public static List<KeyValuePair<NativeStoneType, SerieOfRock>> Layers = new();
+	public static List<KeyValuePair<NativeStoneType, EnvironRock>> Layers = new();
 
 	public static BlockState[] GetProperType(float a, int dist)
 	{
@@ -41,7 +41,7 @@ public class SerieOfRock
 	private static int uniq_id_counter;
 	public BlockState[] States;
 
-	public SerieOfRock(BlockState[] states)
+	public EnvironRock(BlockState[] states)
 	{
 		uniq_id = uniq_id_counter++;
 		States = states;

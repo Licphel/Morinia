@@ -13,6 +13,7 @@ public class Options
 	public static bool G_Ico, G_Maxm, G_Autor;
 	public static string G_RwTitle, G_CL, G_IL;
 	public static IBinaryList G_Hotspot;
+	public static string FontType;
 
 	public static void Load()
 	{
@@ -29,6 +30,7 @@ public class Options
 		G_Ico = compound.Search<bool>("graphics.auto_iconify");
 		G_Maxm = compound.Search<bool>("graphics.maximized");
 		G_Autor = compound.Search<bool>("graphics.auto_resolution");
+		FontType = compound.Search<string>("graphics.font_type");
 
 		//Settings builtin
 		I18N.LangKey = LanguageGroup;

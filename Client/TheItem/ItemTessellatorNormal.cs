@@ -48,13 +48,12 @@ public class ItemTessellatorNormal : ItemTessellator
 				*/
 
 				int count = stack.Count;
-				int scale = FloatMath.Round(w / 16f);
+				float scale = FloatMath.Round(w / 16f);
 
 				if(count > 1 || forcecount)
 				{
 					string str = count >= 1000 ? "-" : count.ToString();
-
-					batch.Draw(Lore.Literal(str).Style(new LoreStyle() {Bold = true, Darkoutline = true}), x + w + scale, y - scale * 1, Align.RIGHT);
+					batch.Draw(Lore.Literal(str).Outline(0.25f, 0.25f, 0.25f, 0.5f), x + w + scale, y - scale * 1, Align.RIGHT);
 				}
 			}
 		}
